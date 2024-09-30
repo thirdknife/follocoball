@@ -1,0 +1,19 @@
+package templa
+
+import (
+	"follocoball/templa/components"
+)
+
+templ page(title string) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			@components.Head(title)
+		</head>
+		<body class="bg-background font-geist-sans text-foreground antialiased md:block">
+			{ children... }
+			@components.Footer()
+			@components.Scripts()
+		</body>
+	</html>
+}
