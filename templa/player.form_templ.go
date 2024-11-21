@@ -75,7 +75,20 @@ func PlayerForm(props PlayerFormProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-swap=\"outerHTML\"><fieldset class=\"uk-fieldset\"><legend class=\"uk-legend\">Name</legend><div class=\"uk-margin\"><input class=\"uk-input\" type=\"text\" placeholder=\"Player Name\" aria-label=\"Player Name\"></div><button class=\"uk-button uk-button-primary\">Add Player</button></fieldset></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-swap=\"outerHTML\"><fieldset class=\"uk-fieldset\"><legend class=\"uk-legend\">Name</legend><div class=\"uk-margin\"><input class=\"uk-input\" type=\"text\" name=\"name\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(props.Player.Name)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templa/player.form.templ`, Line: 34, Col: 37}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" placeholder=\"Player Name\" aria-label=\"Player Name\"></div><button class=\"uk-button uk-button-primary\" type=\"submit\">Add Player</button></fieldset></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

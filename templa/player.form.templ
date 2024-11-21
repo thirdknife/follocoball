@@ -30,12 +30,14 @@ templ PlayerForm(props PlayerFormProps) {
         <input
             class="uk-input"
             type="text"
+            name="name"
+            value={ props.Player.Name }
             placeholder="Player Name"
             aria-label="Player Name"
         />
         </div>
 
-        <button class="uk-button uk-button-primary">
+        <button class="uk-button uk-button-primary" type="submit">
           Add Player
         </button>
       </fieldset>
