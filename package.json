@@ -7,7 +7,7 @@
     "clsx": "^2.1.1",
     "franken-ui": "^1.1.0",
     "lucide-react": "^0.445.0",
-    "postcss": "^8.4.47",
+    "postcss": "^8.4.49",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
   }

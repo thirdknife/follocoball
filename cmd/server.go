@@ -11,7 +11,7 @@ import (
 
 type Resources struct {
 	API   controller.Resource
-	Views views.Resource
+	Views views.PlayerResource
 }
 
 func (rs Resources) Setup(

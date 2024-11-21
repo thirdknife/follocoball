@@ -3,7 +3,7 @@ module follocoball
 go 1.22.6
 
 require (
-	github.com/a-h/templ v0.2.778
+	github.com/a-h/templ v0.2.793
 	github.com/go-fuego/fuego v0.14.0
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1

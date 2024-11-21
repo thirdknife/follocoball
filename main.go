@@ -23,7 +23,7 @@ func main() {
 	err := godotenv.Load(".env.local", ".env")
 	if err != nil {
 		wd, _ := os.Getwd()
-		slog.Error("Error loading .env files: %s in dir %s", err, wd)
+		slog.Error("Error loading .env files", "err", err, "dir", wd)
 		return
 	}
 
@@ -53,7 +53,9 @@ func main() {
 	apiResources := controller.Resource{
 		Session: db,
 	}
-	viewResources := views.Resource{}
+	viewResources := views.PlayerResource{
+		Session: db,
+	}
 
 	// // Create resources that will be available in HTML controllers
 	// viewsResources := views.Resource{

@@ -3,7 +3,7 @@ package templa
 import "follocoball/store"
 
 type PlayerProps struct {
-    PlayerProps []store.Player
+    Players []store.Player
 }
 
 templ AddPlayerLink() {
@@ -12,6 +12,24 @@ templ AddPlayerLink() {
       <uk-icon icon="circle-plus"></uk-icon> Add Player
     </a>
   </div>
+}
+
+templ ListPlayers(players []store.Player) {
+  <table class="uk-table">
+  <caption>
+    List of all players
+  </caption>
+  <thead>
+    <tr>
+      <th>Player Name</th>
+    </tr>
+  </thead>
+  <tbody>
+      for _, player := range players {
+        <tr><td>{player.Name}</td></tr>
+      }
+  </tbody>
+  </table>
 }
 
 templ PlayerDashboard() {
@@ -90,10 +108,11 @@ templ PlayerDashboard() {
 
 }
 
-templ Player() {
+templ Player(props PlayerProps) {
   @page("Follocoball") {
     @PlayerDashboard(){
       @AddPlayerLink()
+      @ListPlayers(props.Players)
     }
   }
 }
