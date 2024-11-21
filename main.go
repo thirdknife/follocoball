@@ -38,7 +38,6 @@ func main() {
 		logLevel = slog.LevelDebug
 	}
 
-	// Set my custom colored logger
 	slog.SetDefault(slog.New(
 		tint.NewHandler(os.Stderr, &tint.Options{
 			AddSource:  true,

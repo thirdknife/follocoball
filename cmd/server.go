@@ -21,7 +21,6 @@ func (rs Resources) Setup(
 		fuego.WithAddr(":9999"),
 		fuego.WithGlobalResponseTypes(http.StatusForbidden, "Forbidden"),
 	}
-
 	options = append(serverOptions, options...)
 
 	app := fuego.NewServer(options...)
@@ -40,7 +39,7 @@ func (rs Resources) Setup(
 	})
 
 	rs.API.MountRoutes(fuego.Group(app, "/api"))
-	rs.Views.MountRoutes(fuego.Group(app, "/page"))
+	rs.Views.MountRoutes(fuego.Group(app, "/"))
 
 	return app
 }

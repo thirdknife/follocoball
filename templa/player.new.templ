@@ -1,0 +1,15 @@
+package templa
+
+import "follocoball/store"
+
+templ PlayerNew() {
+  @page("Follocoball") {
+    @PlayerDashboard(){
+      @PlayerForm(PlayerFormProps{
+          FormAction: "/player/add",
+		      IsCreating: true,
+          Player: store.Player{},
+      })
+    }
+  }
+}

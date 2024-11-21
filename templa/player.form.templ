@@ -1,0 +1,43 @@
+package templa
+
+import "follocoball/store"
+
+type PlayerFormProps struct {
+	Player         store.Player
+	IsCreating     bool
+	FormAction     string
+	HXTrigger      string
+}
+
+templ PlayerForm(props PlayerFormProps) {
+    <form
+		id="recipe"
+		action={ templ.URL(props.FormAction) }
+		if props.IsCreating {
+			method="POST"
+		} else {
+			method="PUT"
+		}
+		class="form"
+		hx-boost="true"
+		hx-trigger={ props.HXTrigger }
+		hx-swap="outerHTML"
+    >
+      <fieldset class="uk-fieldset">
+        <legend class="uk-legend">Name</legend>
+
+        <div class="uk-margin">
+        <input
+            class="uk-input"
+            type="text"
+            placeholder="Player Name"
+            aria-label="Player Name"
+        />
+        </div>
+
+        <button class="uk-button uk-button-primary">
+          Add Player
+        </button>
+      </fieldset>
+    </form>
+}
