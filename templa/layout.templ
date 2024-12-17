@@ -11,7 +11,9 @@ templ page(title string) {
 			@components.Head(title)
 		</head>
 		<body class="bg-background font-geist-sans text-foreground antialiased md:block">
-			{ children... }
+			<main id="page">
+				{ children... }
+			</main>
 			@components.Scripts()
 		</body>
 	</html>

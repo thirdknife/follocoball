@@ -1,45 +1,52 @@
 package templa
 
-import "follocoball/store"
+import (
+    "follocoball/store"
+    "fmt"
+)
 
 type PlayerFormProps struct {
-	Player         store.Player
-	IsCreating     bool
-	FormAction     string
-	HXTrigger      string
+    Player     store.Player
+    IsCreating bool
+    FormAction string
+    HXTrigger  string
 }
 
 templ PlayerForm(props PlayerFormProps) {
     <form
-		id="recipe"
-		action={ templ.URL(props.FormAction) }
-		if props.IsCreating {
-			method="POST"
-		} else {
-			method="PUT"
-		}
-		class="form"
-		hx-boost="true"
-		hx-trigger={ props.HXTrigger }
-		hx-swap="outerHTML"
+        id="recipe"
+        action={ templ.URL(props.FormAction) }
+        if props.IsCreating {
+            method="POST"
+        } else {
+            method="PUT"
+        }
+        class="form"
+        hx-boost="true"
+        hx-trigger={ props.HXTrigger }
+        hx-target="#page"
+		hx-select="#page"
+        hx-swap="outerHTML"
     >
-      <fieldset class="uk-fieldset">
-        <legend class="uk-legend">Name</legend>
+        <fieldset class="uk-fieldset">
 
-        <div class="uk-margin">
-        <input
-            class="uk-input"
-            type="text"
-            name="name"
-            value={ props.Player.Name }
-            placeholder="Player Name"
-            aria-label="Player Name"
-        />
-        </div>
+            <input type="hidden" name="ID" value={ fmt.Sprintf("%v", props.Player.ID) }/>
+            <legend class="uk-legend">Name</legend>
 
-        <button class="uk-button uk-button-primary" type="submit">
-          Add Player
-        </button>
-      </fieldset>
+            <div class="uk-margin">
+                <input
+                    class="uk-input"
+                    type="text"
+                    name="name"
+                    value={ props.Player.Name }
+                    placeholder="Player Name"
+                    aria-label="Player Name"
+                />
+            </div>
+
+            <button class="uk-button uk-button-primary" type="submit">
+                Save Player
+            </button>
+        </fieldset>
     </form>
 }

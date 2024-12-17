@@ -1,118 +1,78 @@
 package templa
 
-import "follocoball/store"
+import (
+    "follocoball/store"
+    "fmt"
+)
 
 type PlayerProps struct {
     Players []store.Player
 }
 
+type EditPlayerProps struct {
+    Player store.Player
+}
+
+
 templ AddPlayerLink() {
-  <div class="flex items-center justify-between">
-    <a class="uk-button uk-button-primary uk-icon-circle-plus" href="/player/add">
-      <uk-icon icon="circle-plus"></uk-icon> Add Player
-    </a>
-  </div>
+    <div class="flex items-center justify-between">
+        <a class="uk-button uk-button-primary uk-icon-circle-plus" href="/player/add">
+            <uk-icon icon="circle-plus"></uk-icon> Add Player
+        </a>
+    </div>
+}
+
+templ EditPlayer(props EditPlayerProps) {
+    @page("Follocoball") {
+        @PlayerDashboard() {
+            @PlayerForm(PlayerFormProps{
+                FormAction: "/player/edit/"+fmt.Sprintf("%v", props.Player.ID),
+                IsCreating: false,
+                Player: props.Player,
+                HXTrigger: "submit",
+            })
+        }
+    }
 }
 
 templ ListPlayers(players []store.Player) {
-  <table class="uk-table">
-  <caption>
-    List of all players
-  </caption>
-  <thead>
-    <tr>
-      <th>Player Name</th>
-    </tr>
-  </thead>
-  <tbody>
-      for _, player := range players {
-        <tr><td>{player.Name}</td></tr>
-      }
-  </tbody>
-  </table>
-}
-
-templ PlayerDashboard() {
-  <div class="flex h-9 items-center border-b border-border px-2 py-1 shadow-sm">
-    <nav class="flex space-x-1 text-sm">
-      <a class="px-3 py-1 font-bold" href="#"> Follocoball </a>
-      <div
-        class="uk-drop uk-dropdown"
-        uk-dropdown="mode: click; pos: bottom-left"
-      >
-        <ul class="uk-dropdown-nav uk-nav">
-          <li>
-            <a class="uk-drop-close justify-between" href="#demo" uk-toggle>
-              About Follocoball
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <a class="px-3 py-1" href="#">Account</a>
-      <div class="uk-drop uk-dropdown" uk-drop="mode: click; pos: bottom-left">
-        <ul class="uk-dropdown-nav">
-          <li class="uk-nav-header">
-            <span class="ml-6"> Settings </span>
-          </li>
-          <li class="uk-nav-divider"></li>
-          <li>
-            <a class="uk-drop-close" href="#demo" uk-toggle>
-              <span class="ml-6">Subscription</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-
-  <div class="grid grid-cols-5">
-    <div class="hidden space-y-4 py-4 lg:block">
-      <div class="px-3 py-2">
-        <h2 class="mb-2 px-3 text-lg font-semibold tracking-tight">Scouting</h2>
-        <ul class="uk-nav uk-nav-secondary">
-          <li class="uk-active">
-            <a class="font-medium" href="#demo" uk-toggle>
-              <span class="mr-2 size-4">
-                <uk-icon icon="shirt"></uk-icon>
-              </span>
-              Players
-            </a>
-          </li>
-          <li>
-            <a class="font-medium" href="#demo" uk-toggle>
-              <span class="mr-2 size-4">
-                <uk-icon icon="clipboard-minus"></uk-icon>
-              </span>
-              Reports
-            </a>
-          </li>
-          <li>
-            <a class="font-medium" href="#demo" uk-toggle>
-              <span class="mr-2 size-4">
-                <uk-icon icon="calendar-days"></uk-icon>
-              </span>
-              Calender
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="uk-overflow-auto mt-4 rounded-md border border-border">
+        <table class="uk-table uk-table-middle uk-table-divider uk-table-hover uk-table-small">
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                for _, player := range players {
+                    <tr>
+                        <td>{player.Name}</td>
+                        <td>
+                            <button 
+                                hx-delete={ "/player/delete/" + fmt.Sprintf("%v", player.ID) }
+                                hx-target="#page"
+                                hx-select="#page"
+                                hx-swap="outerHTML"
+                                hx-replace-url="/player"
+                                hx-confirm="Are you sure you want to delete this player?"
+                                class="uk-button uk-button-danger">
+                                Delete
+                            </button>
+                            <a href={ templ.URL("/player/edit/" + fmt.Sprintf("%v", player.ID)) }>Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-
-    <div class="col-span-5 border-l border-border lg:col-span-4">
-      <div class="px-8 py-6">
-        { children... }
-      </div>
-    </div>
-  </div> 
-
 }
 
 templ Player(props PlayerProps) {
-  @page("Follocoball") {
-    @PlayerDashboard(){
-      @AddPlayerLink()
-      @ListPlayers(props.Players)
+    @page("Follocoball") {
+        @PlayerDashboard() {
+            @AddPlayerLink()
+            @ListPlayers(props.Players)
+        }
     }
-  }
 }
